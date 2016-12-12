@@ -201,6 +201,32 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
         );
         $tsConfig = implode("\n", $tsConfig);
 
+        // Default uc
+        $uc = array(
+            'moduleData' => array(
+                'web_layout' => array(
+                    // not "quick edit" but "columns" should be the
+                    // default submodule within the page module
+                    'function' => '1',
+                ),
+                'web_list' => array(
+                    // check the important boxes right away
+                    'bigControlPanel' => '1',
+                    'localization' => '1',
+                ),
+                'web_ts' => array(
+                    // not "constant editor" but "object browser"
+                    'function' => 'TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateObjectBrowserModuleFunctionController',
+                    // better defaults for immediate debugging the actual typoscript
+                    'ts_browser_type' => 'setup',
+                    'ts_browser_const' => 'subst',
+                    'ts_browser_fixedLgd' => '0',
+                    'ts_browser_showComments' => '1',
+                ),
+            ),
+        );
+        $uc = serialize($uc);
+
         try {
             // Get uid from current dev user (if already existing)
             $query = 'SELECT uid
@@ -211,7 +237,7 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
 
             // Insert or update user in TYPO3 database
             $query = 'INSERT INTO ' . DatabaseConnection::sanitizeSqlDatabase($database) . '.be_users
-                                  (uid, tstamp, crdate, realName, username, password, TSconfig, admin, disable, starttime, endtime)
+                                  (uid, tstamp, crdate, realName, username, password, TSconfig, uc, admin, disable, starttime, endtime)
                        VALUES(
                           ' . DatabaseConnection::quote($beUserId) . ',
                           UNIX_TIMESTAMP(),
@@ -220,6 +246,7 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
                           ' . DatabaseConnection::quote($username) . ',
                           ' . DatabaseConnection::quote($password) . ',
                           ' . DatabaseConnection::quote($tsConfig) . ',
+                          ' . DatabaseConnection::quote($uc) . ',
                           1,
                           0,
                           0,
