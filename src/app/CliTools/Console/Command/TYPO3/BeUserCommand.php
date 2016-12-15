@@ -203,6 +203,14 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
 
         // Default uc
         $uc = array(
+            'thumbnailsByDefault' => 1,
+            'recursiveDelete' => 1,
+            'showHiddenFilesAndFolders' => 1,
+            'edit_RTE' => 1,
+            'resizeTextareas' => 1,
+            'resizeTextareas_Flexible' => 1,
+            'copyLevels' => 99,
+            'rteResize' => 99,
             'moduleData' => array(
                 'web_layout' => array(
                     // not "quick edit" but "columns" should be the
@@ -212,7 +220,9 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
                 'web_list' => array(
                     // check the important boxes right away
                     'bigControlPanel' => '1',
+                    'clipBoard' => '1',
                     'localization' => '1',
+                    'showPalettes' => '1',
                 ),
                 'web_ts' => array(
                     // not "constant editor" but "object browser"
@@ -222,6 +232,12 @@ class BeUserCommand extends \CliTools\Console\Command\AbstractCommand
                     'ts_browser_const' => 'subst',
                     'ts_browser_fixedLgd' => '0',
                     'ts_browser_showComments' => '1',
+                ),
+                'file_list' => array(
+                    'bigControlPanel' => '1',
+                    'clipBoard' => '1',
+                    'localization' => '1',
+                    'showPalettes' => '1',
                 ),
             ),
         );
