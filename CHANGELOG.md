@@ -1,6 +1,10 @@
 CliTools Changelog
 ==================
 
+2.5.0 - 2019-09-04
+------------------
+- TYPO3 9 compatibility
+
 2.4.4 - 2017-05-14
 ------------------
 - Fix regression in sync when mysql port is missing
