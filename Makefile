@@ -3,7 +3,7 @@ TAG ?= $(shell git describe --tags)
 all: clean autoload build
 
 clean:
-	rm -f clitools.phar
+	rm -rf clitools.phar src/vendor/
 
 build:
 	bash compile.sh

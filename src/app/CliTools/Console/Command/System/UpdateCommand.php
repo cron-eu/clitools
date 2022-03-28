@@ -25,6 +25,7 @@ use CliTools\Service\SelfUpdateService;
 use CliTools\Shell\CommandBuilder\CommandBuilder;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Terminal;
 
 class UpdateCommand extends \CliTools\Console\Command\AbstractCommand
 {
@@ -213,8 +214,7 @@ class UpdateCommand extends \CliTools\Console\Command\AbstractCommand
      */
     protected function outputBlock($output, $msg)
     {
-        list($termWidth) = $this->getApplication()
-                                ->getTerminalDimensions();
+        $termWidth = (new Terminal())->getWidth();
         $separator = '<info>' . str_repeat('-', $termWidth) . '</info>';
 
         $msg = str_repeat(' ', $termWidth - strlen($msg) - 10) . $msg;

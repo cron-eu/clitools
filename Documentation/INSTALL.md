@@ -65,12 +65,7 @@ debug_log_dir = "/tmp/debug/"
 [syscheck]
 enabled = 1
 wall = 1
-growl = 1
 diskusage = 85
-
-[growl]
-server = 192.168.56.1
-password =
 
 [commands]
 ; not used commands here

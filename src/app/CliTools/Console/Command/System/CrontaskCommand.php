@@ -95,14 +95,6 @@ class CrontaskCommand extends \CliTools\Console\Command\AbstractCommand implemen
 
         if (!empty($this->sysCheckMessageList)) {
             if ($this->getApplication()
-                     ->getConfigValue('syscheck', 'growl', 0)
-            ) {
-                // Growl notification
-                $message = 'WARNING:' . "\n\n" . implode("\n", $this->sysCheckMessageList);
-                $this->sendGrowlMessage('CliTools :: System Check Warnings', $message);
-            }
-
-            if ($this->getApplication()
                      ->getConfigValue('syscheck', 'wall', 0)
             ) {
                 // Local wall message
@@ -112,33 +104,6 @@ class CrontaskCommand extends \CliTools\Console\Command\AbstractCommand implemen
                 $message .= "\n\n" . '(This warning can be disabled in /etc/clitools.ini)';
                 UnixUtility::sendWallMessage($message);
             }
-        }
-    }
-
-    /**
-     * Send growl message
-     *
-     * @param string $title   Notification title
-     * @param string $message Notification message
-     */
-    protected function sendGrowlMessage($title, $message)
-    {
-        require CLITOOLS_ROOT_FS . '/vendor/jamiebicknell/Growl-GNTP/growl.gntp.php';
-
-        $growlServer   = (string)$this->getApplication()
-                                      ->getConfigValue('growl', 'server', null);
-        $growlPassword = (string)$this->getApplication()
-                                      ->getConfigValue('growl', 'password', null);
-
-        if (!empty($growlServer)) {
-            $growl = new \Growl($growlServer, $growlPassword);
-            $growl->setApplication('Vagrant VM', 'Vagrant Development VM');
-
-            // Only need to use the following method on first use or change of icon
-            $growl->registerApplication();
-
-            // Basic Notification
-            $growl->notify($title, $message);
         }
     }
 
