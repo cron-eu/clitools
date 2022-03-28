@@ -116,33 +116,6 @@ class CrontaskCommand extends \CliTools\Console\Command\AbstractCommand implemen
     }
 
     /**
-     * Send growl message
-     *
-     * @param string $title   Notification title
-     * @param string $message Notification message
-     */
-    protected function sendGrowlMessage($title, $message)
-    {
-        require CLITOOLS_ROOT_FS . '/vendor/jamiebicknell/Growl-GNTP/growl.gntp.php';
-
-        $growlServer   = (string)$this->getApplication()
-                                      ->getConfigValue('growl', 'server', null);
-        $growlPassword = (string)$this->getApplication()
-                                      ->getConfigValue('growl', 'password', null);
-
-        if (!empty($growlServer)) {
-            $growl = new \Growl($growlServer, $growlPassword);
-            $growl->setApplication('Vagrant VM', 'Vagrant Development VM');
-
-            // Only need to use the following method on first use or change of icon
-            $growl->registerApplication();
-
-            // Basic Notification
-            $growl->notify($title, $message);
-        }
-    }
-
-    /**
      * Check system disk usage
      */
     protected function systemCheckDiskUsage()

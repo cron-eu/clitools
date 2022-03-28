@@ -1,12 +1,8 @@
 {
-    "name": "Clitools",
-    "repositories": [
-      { "type": "vcs", "url": "https://github.com/jamiebicknell/Growl-GNTP.git" }
-    ],
+    "name": "cron-eu/cli-tools",
     "require": {
-        "symfony/console": "~2.8",
-        "jamiebicknell/Growl-GNTP": "dev-master",
-        "symfony/yaml": "~2.8"
+        "symfony/console": "^5.4",
+        "symfony/yaml": "^5.4"
     },
     "autoload": {
         "psr-0": {
