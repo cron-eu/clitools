@@ -21,6 +21,8 @@ namespace CliTools\Console\Formatter;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Symfony\Component\Console\Terminal;
+
 class OutputFormatterStyle extends \Symfony\Component\Console\Formatter\OutputFormatterStyle
 {
 
@@ -146,7 +148,7 @@ class OutputFormatterStyle extends \Symfony\Component\Console\Formatter\OutputFo
         // ##################
 
         if (!empty($this->wrap)) {
-            list($width) = $this->application->getTerminalDimensions();
+            $width = (new Terminal())->getWidth();
 
             $length     = strlen($text);
             $wrapLength = (int)($width - $length - 2) / 2 * 0.5;
