@@ -3,10 +3,12 @@ CliTools Changelog
 
 2.6.0 - 2022-03-28
 ------------------
-- update to composer v2
-- upgrade symfony/console and symfony/yaml to 5.4
-- use box-project/box v3.16
-- remove "growl"
+* requires minimum of PHP 7.2
+* update to composer v2
+* upgrade symfony/console and symfony/yaml from 2.8 to 4.4 (latest available for PHP 7.2)
+* use box-project/box v3.16
+* remove "growl"
+* remove useless "greadlink" on MacOS
 
 2.5.0 - 2019-09-04
 ------------------
