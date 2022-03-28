@@ -95,14 +95,6 @@ class CrontaskCommand extends \CliTools\Console\Command\AbstractCommand implemen
 
         if (!empty($this->sysCheckMessageList)) {
             if ($this->getApplication()
-                     ->getConfigValue('syscheck', 'growl', 0)
-            ) {
-                // Growl notification
-                $message = 'WARNING:' . "\n\n" . implode("\n", $this->sysCheckMessageList);
-                $this->sendGrowlMessage('CliTools :: System Check Warnings', $message);
-            }
-
-            if ($this->getApplication()
                      ->getConfigValue('syscheck', 'wall', 0)
             ) {
                 // Local wall message
