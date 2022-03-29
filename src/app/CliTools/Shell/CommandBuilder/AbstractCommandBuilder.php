@@ -305,8 +305,6 @@ class AbstractCommandBuilder implements CommandBuilderInterface
      */
     public function addArgumentTemplateList($arg, array $params)
     {
-        $this->validateArgumentValue($arg);
-
         $params               = array_map('escapeshellarg', $params);
         $this->argumentList[] = vsprintf($arg, $params);
 
@@ -357,9 +355,6 @@ class AbstractCommandBuilder implements CommandBuilderInterface
      */
     protected function appendArgumentsToList($args, $escape = true)
     {
-        // Validate each argument value
-        array_walk($args, array($this, 'validateArgumentValue'));
-
         if ($escape) {
             $args = array_map('escapeshellarg', $args);
         }
@@ -663,20 +658,6 @@ class AbstractCommandBuilder implements CommandBuilderInterface
     {
         return $this->getExecutor()
                     ->execInteractive($opts);
-    }
-
-    /**
-     * Validate argument value
-     *
-     * @param mixed $value Value
-     *
-     * @throws \RuntimeException
-     */
-    protected function validateArgumentValue($value)
-    {
-        if (strlen($value) === 0) {
-            throw new \RuntimeException('Argument value cannot be empty');
-        }
     }
 
     // ##########################################
