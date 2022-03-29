@@ -1084,7 +1084,9 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
 
 
         if ($database !== null) {
-            $command->addArgument($database);
+            $command->addArgumentTemplate('-D %s', $database);
+        } else {
+            $command->addArgument('-D', '');
         }
 
         return $command;
