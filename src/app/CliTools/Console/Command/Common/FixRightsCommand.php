@@ -71,6 +71,8 @@ class FixRightsCommand extends \CliTools\Console\Command\AbstractCommand
                 $this->setRights($entry);
             }
         }
+
+        return 0;
     }
 
     /**

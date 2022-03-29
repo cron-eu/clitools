@@ -121,6 +121,8 @@ class DomainCommand extends \CliTools\Console\Command\Mysql\AbstractCommand
             // ##############
             $this->runTaskForDomain($dbName);
         }
+
+        return 0;
     }
 
     /**

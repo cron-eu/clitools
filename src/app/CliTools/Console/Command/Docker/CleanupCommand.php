@@ -57,6 +57,8 @@ class CleanupCommand extends AbstractCommand
         $this->cleanDockerImages();
         $this->cleanDockerVolumes();
         $output->writeln('<comment>Cleanup finished</comment>');
+
+        return 0;
     }
 
     /**

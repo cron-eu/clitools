@@ -189,7 +189,8 @@ class ShareCommand extends \CliTools\Console\Command\AbstractCommand
             $vagrant->addArgument('--ssh-once');
         }
 
-
         $vagrant->executeInteractive($opts);
+
+        return 0;
     }
 }
