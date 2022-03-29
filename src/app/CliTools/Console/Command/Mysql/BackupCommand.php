@@ -138,6 +138,8 @@ class BackupCommand extends AbstractCommand
         $command->executeInteractive();
 
         $output->writeln('<h2>Database "' . $database . '" stored to "' . $dumpFile . '"</h2>');
+
+        return 0;
     }
 
     /**

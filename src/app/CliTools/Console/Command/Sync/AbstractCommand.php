@@ -409,6 +409,8 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
         }
 
         $this->cleanup();
+
+        return 0;
     }
 
     /**
