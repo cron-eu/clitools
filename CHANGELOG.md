@@ -1,6 +1,10 @@
 CliTools Changelog
 ==================
 
+2.7.0 - 2023-04-21
+------------------
+* also compatible with PHP 8.0, 8.1 and 8.2
+
 2.6.0 - 2022-03-28
 ------------------
 * Do not conflict with .my.cnf having a "database="
