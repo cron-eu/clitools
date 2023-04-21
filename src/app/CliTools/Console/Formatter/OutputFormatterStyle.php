@@ -151,7 +151,7 @@ class OutputFormatterStyle extends \Symfony\Component\Console\Formatter\OutputFo
             $width = (new Terminal())->getWidth();
 
             $length     = strlen($text);
-            $wrapLength = (int)($width - $length - 2) / 2 * 0.5;
+            $wrapLength = (int)( ($width - $length - 2) / 2 * 0.5 );
 
             if ($wrapLength >= 1) {
                 $ret = str_repeat($this->wrap, $wrapLength) . ' ' . $ret . ' ' . str_repeat($this->wrap, $wrapLength);
