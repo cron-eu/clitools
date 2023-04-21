@@ -351,10 +351,8 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
             foreach ($input as $key => $value) {
                 if (is_array($value)) {
                     $value = $arrayFilterRecursive($value, $callback);
-                } else {
-                    if (strlen($value) == 0) {
-                        $value = null;
-                    }
+                } elseif (empty($value)) {
+                    $value = null;
                 }
 
                 if ($value !== null && $value !== false && $value !== true) {
@@ -653,7 +651,7 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
                     $command = $this->buildComplexTask($commandRow);
                 }
 
-                if ($command) {
+                if (isset($command)) {
                     $command->executeInteractive();
                 }
             }

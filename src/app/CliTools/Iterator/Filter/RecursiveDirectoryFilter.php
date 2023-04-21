@@ -29,7 +29,7 @@ class RecursiveDirectoryFilter extends \RecursiveFilterIterator
      *
      * @return bool
      */
-    public function accept()
+    public function accept(): bool
     {
         /** @var \DirectoryIterator $dirEntry */
         $dirEntry = $this->current();

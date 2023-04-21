@@ -6,7 +6,7 @@
         }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.2 || ^8.0",
         "symfony/console": "^4.4",
         "symfony/yaml": "^4.4"
     },
@@ -14,5 +14,16 @@
         "psr-0": {
             "CliTools": "./app"
         }
+    },
+    "scripts": {
+        "sniffer:php82": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",
+        "sniffer:php81": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
+        "sniffer:php74": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
+        "sniffer:php72": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.2"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpcompatibility/php-compatibility": "^9.3"
     }
 }
