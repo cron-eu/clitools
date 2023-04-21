@@ -605,6 +605,10 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
      */
     protected function checkIfDockerExists()
     {
+        if (file_exists('/.dockerenv')) {
+            // in case we are already inside a container (probably the dev/ssh container), skip this check
+            return;
+        }
         $dockerPath = \CliTools\Utility\DockerUtility::searchDockerDirectoryRecursive();
 
         if (!empty($dockerPath)) {
