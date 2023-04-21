@@ -129,7 +129,7 @@ class OutputFormatterStyle extends \Symfony\Component\Console\Formatter\OutputFo
      *
      * @return string
      */
-    public function apply($text)
+    public function apply($text): string
     {
 
         $ret = $text;

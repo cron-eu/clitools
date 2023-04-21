@@ -110,7 +110,7 @@ abstract class AbstractCommand extends Command
      *
      * @api
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
 
         try {
@@ -252,7 +252,7 @@ abstract class AbstractCommand extends Command
      *
      * @api
      */
-    public function getApplication()
+    public function getApplication(): ?\Symfony\Component\Console\Application
     {
         return parent::getApplication();
     }

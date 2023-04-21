@@ -175,7 +175,7 @@ class ConfigReader implements \ArrayAccess
      * @param string $offset Array key
      * @param mixed  $value  Value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->data[] = $value;
@@ -191,7 +191,7 @@ class ConfigReader implements \ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
@@ -201,7 +201,7 @@ class ConfigReader implements \ArrayAccess
      *
      * @param string $offset Array key
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
@@ -213,7 +213,7 @@ class ConfigReader implements \ArrayAccess
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
