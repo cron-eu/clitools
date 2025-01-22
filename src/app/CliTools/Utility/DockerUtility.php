@@ -44,7 +44,7 @@ class DockerUtility
      */
     public static function lookupDockerComposeContainerId($container)
     {
-        $command = new CommandBuilder('docker-compose', ['ps', '-q', $container]);
+        $command = new CommandBuilder('docker', ['compose', 'ps', '-q', $container]);
         $ret = $command->execute()->getOutputString();
 
         if (empty($ret)) {
