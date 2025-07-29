@@ -200,7 +200,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
         }
 
         if ($useDockerMysql) {
-            $password = DockerUtility::getDockerContainerEnv($this->getLocalDockerContainer(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL ), 'MYSQL_ROOT_PASSWORD');
+            $container = $this->getLocalDockerContainer(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL);
+            $password = DockerUtility::getDockerContainerEnv($container, 'MYSQL_ROOT_PASSWORD');
+            if (empty($password)) {
+                $password = DockerUtility::getDockerContainerEnv($container, 'MARIADB_ROOT_PASSWORD');
+            }
             DatabaseConnection::setDsn('mysql:host=localhost', 'root', $password);
         }
     }
