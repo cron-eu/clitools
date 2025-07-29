@@ -187,7 +187,11 @@ abstract class AbstractDockerCommand extends AbstractCommand
      */
     protected function getDockerMysqlRootPassword($container)
     {
-        return DockerUtility::getDockerContainerEnv($container, 'MYSQL_ROOT_PASSWORD');
+        $rootPassword = DockerUtility::getDockerContainerEnv($container, 'MYSQL_ROOT_PASSWORD');
+        if (empty($rootPassword)) {
+            $rootPassword = DockerUtility::getDockerContainerEnv($container, 'MARIADB_ROOT_PASSWORD');
+        }
+        return $rootPassword;
     }
 
     /**
