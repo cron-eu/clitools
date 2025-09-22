@@ -107,6 +107,12 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
                  'Run only mysql'
              )
              ->addOption(
+                 'mysql-keep-file',
+                 null,
+                 InputOption::VALUE_NONE,
+                 'Keep SQL dump file in current working directory instead of temp directory'
+             )
+             ->addOption(
                  'rsync',
                  null,
                  InputOption::VALUE_NONE,
