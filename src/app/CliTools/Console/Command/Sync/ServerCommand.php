@@ -155,7 +155,11 @@ class ServerCommand extends AbstractRemoteSyncCommand
             $localDatabase   = trim($localDatabase);
             $foreignDatabase = trim($foreignDatabase);
 
-            $dumpFile = $this->tempDir . '/' . $localDatabase . '.sql.dump';
+            if ($this->input->getOption('mysql-keep-file')) {
+                $dumpFile = getcwd() . '/.clisync-' . $foreignDatabase . '.sql.dump';
+            } else {
+                $dumpFile = $this->tempDir . '/' . $localDatabase . '.sql.dump';
+            }
 
             // ##########
             // Dump from server
