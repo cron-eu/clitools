@@ -72,7 +72,7 @@ class SlowLogCommand extends AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $slowLogQueryTime     = 1;
         $logNonIndexedQueries = (bool)$input->getOption('no-index');

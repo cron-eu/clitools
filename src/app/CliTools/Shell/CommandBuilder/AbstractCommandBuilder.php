@@ -98,11 +98,11 @@ class AbstractCommandBuilder implements CommandBuilderInterface
     /**
      * Constructor
      *
-     * @param null|string       $command   Command
+     * @param ?string       $command   Command
      * @param null|string|array $args      Arguments
-     * @param null|array        $argParams Argument params (sprintf)
+     * @param ?array        $argParams Argument params (sprintf)
      */
-    public function __construct($command = null, $args = null, $argParams = null)
+    public function __construct(?string $command = null, $args = null, ?array $argParams = null)
     {
         $this->initialize();
 
@@ -385,11 +385,11 @@ class AbstractCommandBuilder implements CommandBuilderInterface
     /**
      * Set output (stdout and/or stderr) redirection
      *
-     * @param null|string $outputRedirect
+     * @param ?string $outputRedirect
      *
      * @return $this
      */
-    public function setOutputRedirect($outputRedirect = null)
+    public function setOutputRedirect(?string $outputRedirect = null)
     {
         $this->outputRedirect = $outputRedirect;
 
@@ -650,11 +650,11 @@ class AbstractCommandBuilder implements CommandBuilderInterface
     /**
      * Execute command
      *
-     * @param array $opts Option array
+     * @param ?array $opts Option array
      *
      * @return Executor
      */
-    public function executeInteractive(array $opts = null)
+    public function executeInteractive(?array $opts = null)
     {
         return $this->getExecutor()
                     ->execInteractive($opts);

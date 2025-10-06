@@ -14,6 +14,9 @@ CliTools is a terminal utility for faster development. It should make some daily
 
 CliTools is based on Symfony Components (Console).
 
+* From `2.10.0` on, it requires PHP 8.2 or higher.
+* Use version `2.9.0` if you need to run it with PHP 7.4 up to 8.1.
+
 ## Table of contents
 
 - [Installation and requirements](/Documentation/INSTALL.md)

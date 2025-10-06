@@ -49,7 +49,7 @@ class CliCommand extends AbstractCommand implements \CliTools\Console\Filter\Any
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $ret = 0;
 

@@ -36,12 +36,12 @@ class Typo3Utility
     /**
      * Generate TYPO3 password
      *
-     * @param    string $password Password
-     * @param    string $type     Type of password (see constants)
+     * @param    string  $password Password
+     * @param    ?string $type     Type of password (see constants)
      *
      * @return    null|string
      */
-    public static function generatePassword($password, $type = null)
+    public static function generatePassword($password, ?string $type = null)
     {
         $ret = null;
 
@@ -92,14 +92,14 @@ class Typo3Utility
     /**
      * Guess best TYPO3 base path
      *
-     * @param  string         $basePath     System base path
-     * @param  InputInterface $input        Input instance
-     * @param  null|string    $inputArgName Input option name for base path
+     * @param  string          $basePath     System base path
+     * @param  ?InputInterface $input        Input instance
+     * @param  ?string         $inputArgName Input option name for base path
      *
      * @return null|string
      * @throws \RuntimeException
      */
-    public static function guessBestTypo3BasePath($basePath, $input = null, $inputArgName = null)
+    public static function guessBestTypo3BasePath($basePath, ?InputInterface $input = null, ?string $inputArgName = null)
     {
         $ret = null;
 

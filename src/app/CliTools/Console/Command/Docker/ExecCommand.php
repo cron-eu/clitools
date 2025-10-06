@@ -45,7 +45,7 @@ class ExecCommand extends AbstractCommand implements \CliTools\Console\Filter\An
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $paramList = $this->getFullParameterList();
         $container = $this->getApplication()

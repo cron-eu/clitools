@@ -184,11 +184,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
      *
      * @param  string                  $containerName Container name
      * @param  CommandBuilderInterface $comamnd       Command
-     * @param  callback|null           $dockerCommandCallback   Docker command callback
+     * @param  ?callable               $dockerCommandCallback   Docker command callback
      *
      * @return int|null|void
      */
-    protected function executeDockerExec($containerName, CommandBuilderInterface $command, callable $dockerCommandCallback = null)
+    protected function executeDockerExec($containerName, CommandBuilderInterface $command, ?callable $dockerCommandCallback = null)
     {
         if (empty($containerName)) {
             $this->output->writeln('<p-error>No container specified</p-error>');
@@ -237,11 +237,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Execute docker compose run
      *
-     * @param  null|CommandBuilderInterface $command Command
+     * @param  ?CommandBuilderInterface $command Command
      *
      * @return int|null|void
      */
-    protected function executeDockerCompose(CommandBuilderInterface $command = null)
+    protected function executeDockerCompose(?CommandBuilderInterface $command = null)
     {
         // Search updir for docker-compose.yml
         $path = \CliTools\Utility\DockerUtility::searchDockerDirectoryRecursive();
@@ -299,10 +299,10 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     }
 
     /**
-     * @param null $containerName Poissible Container name (csv)
+     * @param ?string $containerName Poissible Container name (csv)
      * @return null|string
      */
-    protected function findAndBuildContainerName($containerName = null)
+    protected function findAndBuildContainerName(?string $containerName = null)
     {
         // Use cached container name
         if (isset($this->runningContainerCache[$containerName])) {

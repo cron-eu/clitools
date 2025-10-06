@@ -126,11 +126,11 @@ class DockerUtility
     /**
      * Search docker-compose.yml recursive
      *
-     * @param  NULL|string $path Docker path
+     * @param  ?string $path Docker path
      *
      * @return bool|string
      */
-    public static function searchDockerDirectoryRecursive($path = null)
+    public static function searchDockerDirectoryRecursive(?string $path = null)
     {
         return UnixUtility::findFileInDirectortyTree('docker-compose.yml', $path);
     }
@@ -138,11 +138,11 @@ class DockerUtility
     /**
      * Check if current working directory is a docker instance directory
      *
-     * @param  NULL|string $path Docker path
+     * @param  ?string $path Docker path
      *
      * @return bool
      */
-    public static function isDockerDirectory($path = null)
+    public static function isDockerDirectory(?string $path = null)
     {
         if ($path === null) {
             $path = getcwd();
@@ -166,11 +166,11 @@ class DockerUtility
     /**
      * Get docker instance prefix
      *
-     * @param  NULL|string $path Docker path
+     * @param  ?string $path Docker path
      *
      * @return mixed|string
      */
-    public static function getDockerInstancePrefix($path = null)
+    public static function getDockerInstancePrefix(?string $path = null)
     {
         if ($path === null) {
             $path = getcwd();
@@ -186,13 +186,13 @@ class DockerUtility
     /**
      * Get docker instance name
      *
-     * @param  string      $containerName   Container name
-     * @param  int         $containerNumber Container number
-     * @param  NULL|string $path            Docker path
+     * @param  string   $containerName   Container name
+     * @param  int      $containerNumber Container number
+     * @param  ?string  $path            Docker path
      *
      * @return string
      */
-    public static function getDockerInstanceName($containerName, $containerNumber = 1, $path = null)
+    public static function getDockerInstanceName($containerName, $containerNumber = 1, ?string $path = null)
     {
         $dockerName = array(
             \CliTools\Utility\DockerUtility::getDockerInstancePrefix($path),

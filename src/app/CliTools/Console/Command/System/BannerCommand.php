@@ -54,7 +54,7 @@ class BannerCommand extends \CliTools\Console\Command\AbstractCommand implements
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $clearScreen = "\033[H" . "\033[2J";
         $normalFont  = "\033[0m";

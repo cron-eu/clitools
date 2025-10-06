@@ -47,7 +47,7 @@ class InitCommand extends \CliTools\Console\Command\AbstractCommand
      * @return int|null|void
      * @throws \Exception
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $cliSyncFilePath = getcwd() . '/' . AbstractCommand::CONFIG_FILE;
 

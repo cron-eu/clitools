@@ -49,7 +49,7 @@ class StartupCommand extends \CliTools\Console\Command\AbstractCommand implement
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->setupBanner();
         $this->cleanupMysql();

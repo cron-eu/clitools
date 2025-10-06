@@ -48,7 +48,7 @@ class UpdateCommand extends \CliTools\Console\Command\AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->getApplication()
                   ->isRunningAsRoot()

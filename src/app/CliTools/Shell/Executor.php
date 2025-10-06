@@ -79,9 +79,9 @@ class Executor
     /**
      * Constructor
      *
-     * @param null|CommandBuilderInterface $command Command for execution
+     * @param ?CommandBuilderInterface $command Command for execution
      */
-    public function __construct(CommandBuilderInterface $command = null)
+    public function __construct(?CommandBuilderInterface $command = null)
     {
         if ($command !== null) {
             $this->command = $command;
@@ -211,12 +211,12 @@ class Executor
     /**
      * Execute interactive
      *
-     * @param array $opts Option array
+     * @param ?array $opts Option array
      *
      * @return $this
      * @throws \Exception
      */
-    public function execInteractive(array $opts = null)
+    public function execInteractive(?array $opts = null)
     {
         $this->checkCommand();
 

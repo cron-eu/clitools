@@ -393,7 +393,7 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
      * @return int|null|void
      * @throws \Exception
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             // Get context selection
@@ -773,18 +773,18 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
      *
      * @param string     $source   Source directory
      * @param string     $target   Target directory
-     * @param array|null $filelist List of files (patterns)
-     * @param array|null $exclude  List of excludes (patterns)
-     * @param array|null $options  Custom rsync options
+     * @param ?array     $filelist List of files (patterns)
+     * @param ?array     $exclude  List of excludes (patterns)
+     * @param ?array     $options  Custom rsync options
      *
      * @return CommandBuilder
      */
     protected function createRsyncCommand(
         $source,
         $target,
-        array $filelist = null,
-        array $exclude = null,
-        array $options = null
+        ?array $filelist = null,
+        ?array $exclude = null,
+        ?array $options = null
     ) {
         $this->output->writeln('<comment>Rsync from ' . $source . ' to ' . $target . '</comment>');
 
@@ -947,14 +947,14 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Create mysql backup command
      *
-     * @param string      $database            Database name
-     * @param string      $dumpFile            MySQL dump file
-     * @param null|string $filterNameBlacklist Filter name
-     * @param null|string $filterNameWhitelist Filter name
+     * @param string   $database            Database name
+     * @param string   $dumpFile            MySQL dump file
+     * @param ?string  $filterNameBlacklist Filter name
+     * @param ?string  $filterNameWhitelist Filter name
      *
      * @return SelfCommandBuilder
      */
-    protected function createMysqlBackupCommand($database, $dumpFile, $filterNameBlacklist = null, $filterNameWhitelist = null)
+    protected function createMysqlBackupCommand($database, $dumpFile, ?string $filterNameBlacklist = null, ?string $filterNameWhitelist = null)
     {
         $command = new SelfCommandBuilder();
         $command->addArgumentTemplate('mysql:backup %s %s', $database, $dumpFile);
@@ -1012,11 +1012,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Create new mysql command
      *
-     * @param null|string $database Database name
+     * @param ?string $database Database name
      *
      * @return RemoteCommandBuilder
      */
-    protected function createRemoteMySqlCommand($database = null)
+    protected function createRemoteMySqlCommand(?string $database = null)
     {
         $command = new RemoteCommandBuilder('mysql');
         $command
@@ -1059,11 +1059,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Create new mysql command
      *
-     * @param null|string $database Database name
+     * @param ?string $database Database name
      *
      * @return RemoteCommandBuilder
      */
-    protected function createLocalMySqlCommand($database = null)
+    protected function createLocalMySqlCommand($args = null)
     {
         $command = $this->localDockerCommandBuilderFactory(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL , 'mysql');
         $command
@@ -1095,8 +1095,8 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
         }
 
 
-        if ($database !== null) {
-            $command->addArgumentTemplate('-D %s', $database);
+        if ($args !== null) {
+            $command->addArgumentTemplate('-D %s', $args);
         } else {
             $command->addArgument('-D', '');
         }
@@ -1107,11 +1107,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Create new mysqldump command
      *
-     * @param null|string $database Database name
+     * @param ?string $database Database name
      *
      * @return RemoteCommandBuilder
      */
-    protected function createRemoteMySqlDumpCommand($database = null)
+    protected function createRemoteMySqlDumpCommand(?string $database = null)
     {
         $command = new RemoteCommandBuilder('mysqldump');
 
@@ -1158,11 +1158,11 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
     /**
      * Create new mysqldump command
      *
-     * @param null|string $database Database name
+     * @param ?string $database Database name
      *
      * @return RemoteCommandBuilder
      */
-    protected function createLocalMySqlDumpCommand($database = null)
+    protected function createLocalMySqlDumpCommand($args)
     {
         $command = $this->localDockerCommandBuilderFactory(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL , 'mysqldump');
 
@@ -1194,8 +1194,8 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
             $command->addArgumentRaw($this->contextConfig->get('mysql.mysqldump.option'));
         }
 
-        if ($database !== null) {
-            $command->addArgument($database);
+        if ($args !== null) {
+            $command->addArgument($args);
         }
 
         // Transfer compression
