@@ -37,4 +37,4 @@ Thanks for support, ideas and issues ...
 - colleagues at [Lightwerk GmbH](http://www.lightwerk.de/)
 - colleagues at [cron IT GmbH](http://www.cron.eu/)
 
-Did we forget anyone? Send me a tweet or create pull request!
+Did we forget anyone? Open up a pull request!
