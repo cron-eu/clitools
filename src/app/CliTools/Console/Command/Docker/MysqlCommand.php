@@ -45,7 +45,7 @@ class MysqlCommand extends AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $container = $this->getApplication()
                           ->getConfigValue('docker', 'container');

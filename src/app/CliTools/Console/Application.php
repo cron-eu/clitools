@@ -36,28 +36,28 @@ class Application extends \Symfony\Component\Console\Application
      *
      * @var array
      */
-    protected $config = array(
-        'config'   => array(),
-        'commands' => array(
-            'class'  => array(),
-            'ignore' => array(),
-        ),
-        '_files'   => array(),
-    );
+    protected $config = [
+        'config'   => [],
+        'commands' => [
+            'class'  => [],
+            'ignore' => [],
+        ],
+        '_files'   => [],
+    ];
 
     /**
      * Configuration files
      *
      * @var array
      */
-    protected $configFiles = array();
+    protected $configFiles = [];
 
     /**
      * Tear down funcs
      *
      * @var array
      */
-    protected $tearDownFuncList = array();
+    protected $tearDownFuncList = [];
 
     /**
      * @var SettingsService
@@ -128,7 +128,7 @@ class Application extends \Symfony\Component\Console\Application
         foreach ($this->tearDownFuncList as $func) {
             call_user_func($func);
         }
-        $this->tearDownFuncList = array();
+        $this->tearDownFuncList = [];
 
         if ($this->settingsService) {
             $this->settingsService->store();
@@ -144,7 +144,7 @@ class Application extends \Symfony\Component\Console\Application
      * @return int 0 if everything went fine, or an error code
      * @throws \Exception
      */
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $ret = 0;
 
@@ -191,7 +191,7 @@ class Application extends \Symfony\Component\Console\Application
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      */
-    protected function configureIO(InputInterface $input, OutputInterface $output)
+    protected function configureIO(InputInterface $input, OutputInterface $output): void
     {
         parent::configureIO($input, $output);
 
@@ -248,11 +248,11 @@ class Application extends \Symfony\Component\Console\Application
     protected function initializeErrorHandler()
     {
         $errorHandler = function ($errno, $errstr, $errfile, $errline) {
-            $msg = array(
+            $msg = [
                 'Message: ' . $errstr,
                 'File: ' . $errfile,
                 'Line: ' . $errline,
-            );
+            ];
 
             $msg = implode("\n", $msg);
 

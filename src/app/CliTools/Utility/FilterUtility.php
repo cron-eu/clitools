@@ -51,14 +51,14 @@ class FilterUtility
     /**
      * Filter mysql table list by filter
      *
-     * @param array       $tables    List of tables
-     * @param array|null  $blacklist List of negative filters
-     * @param array|null  $whitelist List of positive filters
-     * @param string|null $database  Database
+     * @param array    $tables    List of tables
+     * @param ?array   $blacklist List of negative filters
+     * @param ?array   $whitelist List of positive filters
+     * @param ?string  $database  Database
      *
      * @return array
      */
-    public static function mysqlIgnoredTableFilter(array $tables, array $blacklist = null, array $whitelist = null, $database = null)
+    public static function mysqlIgnoredTableFilter(array $tables, ?array $blacklist = null, ?array $whitelist = null, ?string $database = null)
     {
         $ignoredTables = array();
 

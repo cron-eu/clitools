@@ -45,7 +45,7 @@ class ComposeCommand extends AbstractCommand implements \CliTools\Console\Filter
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $paramList = $this->getFullParameterList();
 

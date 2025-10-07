@@ -2,24 +2,23 @@
     "name": "cron-eu/cli-tools",
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "8.4"
         }
     },
     "require": {
-        "php": "^7.2 || ^8.0",
-        "symfony/console": "^4.4",
-        "symfony/yaml": "^4.4"
+        "php": "^8.2 || ^8.3 || ^8.4",
+        "symfony/console": "^7.1",
+        "symfony/yaml": "^7.1"
     },
     "autoload": {
-        "psr-0": {
-            "CliTools": "./app"
+        "psr-4": {
+            "CliTools\\": "./app/CliTools/"
         }
     },
     "scripts": {
-        "sniffer:php82": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2",
-        "sniffer:php81": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.1",
-        "sniffer:php74": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.4",
-        "sniffer:php72": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 7.2"
+        "sniffer:php84": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.4",
+        "sniffer:php83": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.3",
+        "sniffer:php82": "phpcs -p ./app --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.2"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",

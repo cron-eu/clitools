@@ -63,7 +63,7 @@ class DebugCommand extends AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $debugLogLocation = $this->getApplication()
                                  ->getConfigValue('db', 'debug_log_dir', '/tmp');

@@ -73,10 +73,10 @@ class PhpUtility
     /**
      * Genrate unique name
      *
-     * @param null|string $salt Salt
+     * @param ?string $salt Salt
      * @return string
      */
-    public static function uniqueName($salt = null)
+    public static function uniqueName(?string $salt = null)
     {
         $ret = microtime(true) . '#' . $salt . '#' . rand(0,1000000);
         $ret = sha1($ret);
@@ -104,7 +104,7 @@ class PhpUtility
      * @param string   $path      Directory
      * @param integer  $mode      Perms
      * @param boolean  $recursive Creation of nested directories
-     * @param resource $context   Context
+     * @param ?resource $context   Context
      *
      * @throws \RuntimeException
      */
@@ -138,12 +138,12 @@ class PhpUtility
     /**
      * Fetch content from url using curl
      *
-     * @param string   $url      Url
-     * @param callable $progress Progress callback
+     * @param string     $url      Url
+     * @param ?callable  $progress Progress callback
      *
      * @return mixed
      */
-    public static function curlFetch($url, callable $progress = null)
+    public static function curlFetch($url, ?callable $progress = null)
     {
         $curlHandle = curl_init();
         curl_setopt($curlHandle, CURLOPT_URL, $url);

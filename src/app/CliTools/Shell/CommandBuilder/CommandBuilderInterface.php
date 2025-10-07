@@ -151,11 +151,11 @@ interface CommandBuilderInterface
     /**
      * Set output (stdout and/or stderr) redirection
      *
-     * @param null|string $outputRedirect
+     * @param ?string $outputRedirect
      *
      * @return $this
      */
-    public function setOutputRedirect($outputRedirect = null);
+    public function setOutputRedirect(?string $outputRedirect = null);
 
     /**
      * Redirect command stdout output to file

@@ -22,7 +22,7 @@ cd "$SCRIPT_DIR"
 BOX_PATH=vendor/box.phar
 if [[ ! -f vendor/box.phar ]]; then
     mkdir -p vendor
-    wget -O${BOX_PATH} https://github.com/box-project/box/releases/download/4.3.8/box.phar
+    wget -O${BOX_PATH} https://github.com/box-project/box/releases/download/4.6.7/box.phar
 fi
 
 php -d phar.readonly=0 "$SCRIPT_DIR/$BOX_PATH" compile -c box.json

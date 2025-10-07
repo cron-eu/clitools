@@ -83,7 +83,7 @@ class DomainCommand extends \CliTools\Console\Command\Mysql\AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ##################
         // Init

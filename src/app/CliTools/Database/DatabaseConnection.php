@@ -57,11 +57,11 @@ class DatabaseConnection
     /**
      * Set dns
      *
-     * @param string      $dsn      DSN
-     * @param string|null $username Username
-     * @param string|null $password Password
+     * @param string   $dsn      DSN
+     * @param ?string  $username Username
+     * @param ?string  $password Password
      */
-    public static function setDsn($dsn, $username = null, $password = null)
+    public static function setDsn($dsn, ?string $username = null, ?string $password = null)
     {
 
         if ($dsn !== null) {
@@ -363,13 +363,13 @@ class DatabaseConnection
     /**
      * Get All with index (first value)
      *
-     * @param  string $query    SQL query
-     * @param  string $indexCol Index column name
+     * @param  string  $query    SQL query
+     * @param  ?string $indexCol Index column name
      *
      * @return array
      * @throws \PDOException
      */
-    public static function getAllWithIndex($query, $indexCol = null)
+    public static function getAllWithIndex($query, ?string $indexCol = null)
     {
         $ret = array();
 
@@ -689,12 +689,12 @@ class DatabaseConnection
     /**
      * Parse DSN and return value
      *
-     * @param string      $key     DSN Key
-     * @param string|null $default Default value
+     * @param string   $key     DSN Key
+     * @param ?string  $default Default value
      *
      * @return string|null
      */
-    protected static function parseDsnValue($key, $default = null)
+    protected static function parseDsnValue($key, ?string $default = null)
     {
         $ret = $default;
 

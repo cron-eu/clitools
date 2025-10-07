@@ -34,9 +34,9 @@ class ConfigReader implements \ArrayAccess
     /**
      * Constructor
      *
-     * @param array $data Data configuration
+     * @param ?array $data Data configuration
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if ($data !== null) {
             $this->setData($data);
@@ -56,11 +56,11 @@ class ConfigReader implements \ArrayAccess
     /**
      * Get value from specific node (dotted array notation)
      *
-     * @param string|null $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      *
      * @return mixed|null
      */
-    public function get($path = null)
+    public function get(?string $path = null)
     {
         return $this->getNode($path);
     }
@@ -68,11 +68,11 @@ class ConfigReader implements \ArrayAccess
     /**
      * Get array value from specific node (dotted array notation)
      *
-     * @param string|null $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      *
      * @return array|null
      */
-    public function getArray($path = null)
+    public function getArray(?string $path = null)
     {
         $ret = $this->getNode($path);
 
@@ -86,11 +86,11 @@ class ConfigReader implements \ArrayAccess
     /**
      * Get list of keys from specific node (dotted array notation)
      *
-     * @param string|null $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      *
      * @return array|null
      */
-    public function getList($path = null)
+    public function getList(?string $path = null)
     {
         $ret = $this->getNode($path);
 
@@ -118,9 +118,9 @@ class ConfigReader implements \ArrayAccess
     /**
      * Clear value at specific node (dotted array notation)
      *
-     * @param null|string $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      */
-    public function clear($path = null)
+    public function clear(?string $path = null)
     {
         $node =& $this->getNode($path);
         $node = null;
@@ -129,11 +129,11 @@ class ConfigReader implements \ArrayAccess
     /**
      * Check if specific node exists
      *
-     * @param null|string $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      *
      * @return bool
      */
-    public function exists($path = null)
+    public function exists(?string $path = null)
     {
         return ($this->getNode($path) !== null);
     }
@@ -141,11 +141,11 @@ class ConfigReader implements \ArrayAccess
     /**
      * Get node by reference
      *
-     * @param string|null $path Path to node (eg. foo.bar.baz)
+     * @param ?string $path Path to node (eg. foo.bar.baz)
      *
      * @return mixed|null
      */
-    protected function &getNode($path)
+    protected function &getNode(?string $path)
     {
         $data = &$this->data;
 

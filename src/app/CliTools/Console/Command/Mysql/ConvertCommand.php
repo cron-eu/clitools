@@ -72,7 +72,7 @@ class ConvertCommand extends AbstractCommand
      *
      * @return int|null|void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $charset   = 'utf8';
         $collation = 'utf8_general_ci';
