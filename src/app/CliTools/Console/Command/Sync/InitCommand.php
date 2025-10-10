@@ -75,6 +75,8 @@ class InitCommand extends \CliTools\Console\Command\AbstractCommand
         }
 
         $this->output->writeln('<info>Successfully created ' . AbstractCommand::CONFIG_FILE . ' </info>');
+
+        return 0;
     }
 
 }
