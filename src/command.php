@@ -21,7 +21,16 @@
  */
 
 error_reporting(E_ALL);
-define('CLITOOLS_COMMAND_VERSION', '2.10.0');
+
+// Get version from VERSION file using closure
+$getVersion = function() {
+    $versionFile = \Phar::running() !== ''
+        ? dirname(Phar::running(false)) . '/VERSION'
+        : dirname(__DIR__) . '/VERSION';
+    return trim(file_get_contents($versionFile));
+};
+
+define('CLITOOLS_COMMAND_VERSION', $getVersion());
 define('CLITOOLS_ROOT_FS', __DIR__);
 
 require __DIR__ . '/vendor/autoload.php';
