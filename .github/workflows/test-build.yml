@@ -1,0 +1,70 @@
+name: Test Build
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  test-build:
+    name: Test PHAR Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: phar, zip, json, mbstring
+          ini-values: phar.readonly=0
+          tools: composer:v2
+          
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+        
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+          
+      - name: Make compile script executable
+        run: chmod +x compile.sh
+        
+      - name: Build PHAR
+        run: ./compile.sh
+        
+      - name: Verify PHAR exists
+        run: |
+          if [ ! -f clitools.phar ]; then
+            echo "❌ PHAR file was not created"
+            exit 1
+          fi
+          echo "✅ PHAR file created successfully"
+          ls -la clitools.phar
+          
+      - name: Test PHAR functionality
+        run: |
+          echo "Testing PHAR functionality..."
+          php clitools.phar --version
+          echo "✅ PHAR file is functional and returns version correctly"
+          
+      - name: Upload PHAR as artifact (for testing)
+        uses: actions/upload-artifact@v3
+        with:
+          name: clitools-phar-test
+          path: clitools.phar
+          retention-days: 7
+          
+      - name: Show build summary
+        run: |
+          echo "🎉 Build test completed successfully!"
+          echo "📦 PHAR file size: $(du -h clitools.phar | cut -f1)"
+          echo "📋 PHAR contents summary:"
+          php clitools.phar --help | head -10 || echo "Help command not available"
