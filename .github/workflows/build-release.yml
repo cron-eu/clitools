@@ -41,7 +41,12 @@ jobs:
         
       - name: Build PHAR
         run: ./compile.sh
-        
+
+      - name: Verify PHAR works
+        run: |
+          php clitools.phar --version
+          echo "✅ PHAR file built successfully and is functional"
+
       - name: Upload PHAR as release asset
         uses: actions/upload-release-asset@v1
         env:
@@ -52,7 +57,3 @@ jobs:
           asset_name: clitools.phar
           asset_content_type: application/octet-stream
           
-      - name: Verify PHAR works
-        run: |
-          php clitools.phar --version
-          echo "✅ PHAR file built successfully and is functional"
