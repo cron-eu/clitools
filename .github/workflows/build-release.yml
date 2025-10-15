@@ -1,0 +1,54 @@
+name: Build Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build PHAR
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: phar, zip, json, mbstring
+          ini-values: phar.readonly=0
+          tools: composer:v2
+          
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+        
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+          
+      - name: Make compile script executable
+        run: chmod +x compile.sh
+        
+      - name: Build PHAR
+        run: ./compile.sh
+        
+      - name: Upload PHAR as release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./clitools.phar
+          asset_name: clitools.phar
+          asset_content_type: application/octet-stream
+          
+      - name: Verify PHAR works
+        run: |
+          php clitools.phar --version
+          echo "✅ PHAR file built successfully and is functional"
