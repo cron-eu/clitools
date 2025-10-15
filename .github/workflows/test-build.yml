@@ -59,6 +59,31 @@ jobs:
           php clitools.phar --version
           echo "✅ PHAR file is functional and returns version correctly"
           
+      - name: Test PHAR in isolated environment
+        run: |
+          echo "Testing PHAR in isolated environment (moved to temp directory)..."
+          # Create temp directory and copy PHAR there
+          TEMP_DIR=$(mktemp -d)
+          echo "Created temp directory: $TEMP_DIR"
+          cp clitools.phar "$TEMP_DIR/"
+
+          # Test from temp directory (without VERSION file or source code)
+          cd "$TEMP_DIR"
+          echo "Current directory: $(pwd)"
+          echo "Contents: $(ls -la)"
+
+          # Test version command
+          php clitools.phar --version
+          echo "✅ PHAR works correctly from isolated environment"
+
+          # Test help command
+          php clitools.phar --help > /dev/null
+          echo "✅ PHAR help command works from isolated environment"
+
+          # Cleanup
+          rm -rf "$TEMP_DIR"
+          echo "✅ Cleanup completed"
+
       - name: Upload PHAR as artifact (for testing)
         uses: actions/upload-artifact@v4
         with:
