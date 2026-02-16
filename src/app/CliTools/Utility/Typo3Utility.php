@@ -27,11 +27,9 @@ use Symfony\Component\Console\Input\InputInterface;
 class Typo3Utility
 {
 
-    const PASSWORD_TYPE_MD5        = 'md5';
-    const PASSWORD_TYPE_MD5_SALTED = 'md5_salted';
-    const PASSWORD_TYPE_BCRYPT     = 'bcrypt';
-    const PASSWORD_TYPE_ARGON2I    = 'argon2i';
-    const PASSWORD_TYPE_ARGON2ID   = 'argon2id';
+    const PASSWORD_TYPE_BCRYPT   = 'bcrypt';
+    const PASSWORD_TYPE_ARGON2I  = 'argon2i';
+    const PASSWORD_TYPE_ARGON2ID = 'argon2id';
 
     /**
      * Generate TYPO3 password
@@ -39,25 +37,13 @@ class Typo3Utility
      * @param    string  $password Password
      * @param    ?string $type     Type of password (see constants)
      *
-     * @return    null|string
+     * @return    array [hash, algorithm_name]
      */
     public static function generatePassword($password, ?string $type = null)
     {
         $ret = null;
 
         switch ($type) {
-
-            case self::PASSWORD_TYPE_MD5:
-                $ret = md5($password);
-                break;
-
-            case self::PASSWORD_TYPE_MD5_SALTED:
-                // Salted md5
-                $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                $salt  = '$1$' . substr(str_shuffle($chars), 0, 6) . '$';
-                $ret   = crypt($password, $salt);
-                break;
-
             case self::PASSWORD_TYPE_BCRYPT:
                 $ret = password_hash($password, PASSWORD_BCRYPT);
                 break;
@@ -72,8 +58,7 @@ class Typo3Utility
 
             default:
                 $possibleAlgorithms = [];
-                # Commented out since TYPO3 9.5 doesn't support argon2id yet
-                #defined('PASSWORD_ARGON2ID') && $possibleAlgorithms[PASSWORD_ARGON2ID] = self::PASSWORD_TYPE_ARGON2ID;
+                defined('PASSWORD_ARGON2ID') && $possibleAlgorithms[PASSWORD_ARGON2ID] = self::PASSWORD_TYPE_ARGON2ID;
                 defined('PASSWORD_ARGON2I')  && $possibleAlgorithms[PASSWORD_ARGON2I]  = self::PASSWORD_TYPE_ARGON2I;
                 defined('PASSWORD_BCRYPT')   && $possibleAlgorithms[PASSWORD_BCRYPT]   = self::PASSWORD_TYPE_BCRYPT;
 
