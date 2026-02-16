@@ -21,6 +21,7 @@ namespace CliTools\Console\Command\Mysql;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use CliTools\Console\Command\Traits\ClisyncConfigTrait;
 use CliTools\Database\DatabaseConnection;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,6 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCommand extends \CliTools\Console\Command\AbstractCommand
 {
+    use ClisyncConfigTrait;
 
     /**
      * Configure command
@@ -84,6 +86,9 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractCommand
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
+
+        // Try to read credentials from clisync.yml if present
+        $this->initDatabaseConfigurationFromClisync();
 
         $dsn      = null;
         $user     = null;
