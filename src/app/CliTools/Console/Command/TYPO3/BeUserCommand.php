@@ -58,7 +58,7 @@ class BeUserCommand extends \CliTools\Console\Command\Mysql\AbstractCommand
              ->addArgument(
                  'hash',
                  InputArgument::OPTIONAL,
-                 'Choose the hashing algorithm for saving the password: md5, md5_salted, bcrypt, argon2i, argon2id'
+                 'Choose the hashing algorithm for saving the password: bcrypt, argon2i, argon2id'
              );
     }
 
@@ -207,10 +207,11 @@ class BeUserCommand extends \CliTools\Console\Command\Mysql\AbstractCommand
             $beUserId = reset($beUserId);
 
             // Insert or update user in TYPO3 database
+            $uidValue = $beUserId ? $this->mysqlQuote($beUserId) : 'NULL';
             $query = 'INSERT INTO ' . DatabaseConnection::sanitizeSqlDatabase($database) . '.be_users
                                   (uid, tstamp, crdate, realName, username, password, TSconfig, admin, disable, starttime, endtime)
                        VALUES(
-                          ' . $this->mysqlQuote($beUserId) . ',
+                          ' . $uidValue . ',
                           UNIX_TIMESTAMP(),
                           UNIX_TIMESTAMP(),
                           ' . $this->mysqlQuote('DEVELOPMENT') . ',

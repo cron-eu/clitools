@@ -63,48 +63,22 @@ class ListCommand extends \CliTools\Console\Command\AbstractCommand
 
         $basePath = Typo3Utility::guessBestTypo3BasePath($basePath, $input, 'path');
 
-        $versionFileList = array(
-            // 6.x version
-            '/typo3/sysext/core/Classes/Core/SystemEnvironmentBuilder.php' => '/define\(\'TYPO3_version\',[\s]*\'([^\']+)\'\)/i',
-            // 4.x version
-            '/t3lib/config_default.php'                                    => '/\$TYPO_VERSION[\s]*=[\s]*\'([^\']+)\'/i',
-        );
-
         // ####################
         // Find and loop through TYPO3 instances
         // ####################
         $typo3List = array();
 
         foreach (Typo3Utility::getTypo3InstancePathList($basePath, $maxDepth) as $dirPath) {
-            $typo3Version = null;
-            $typo3Path    = $dirPath;
+            $typo3Version = $this->detectTypo3Version($dirPath);
 
-            // Detect version (dirty way...)
-            foreach ($versionFileList as $versionFile => $versionRegExp) {
-                $versionFile = $dirPath . $versionFile;
-
-                if (file_exists($versionFile)) {
-                    $tmp = file_get_contents($versionFile);
-                    if (preg_match($versionRegExp, $tmp, $matches)) {
-                        $typo3Version = $matches[1];
-                        break;
-                    }
-                }
-            }
-
-            if (strpos($typo3Version, '6') === 0) {
-                // TYPO3 6.x
+            if ($typo3Version !== null) {
                 $typo3Version = '<info>' . $typo3Version . '</info>';
-            } elseif (!empty($typo3Version)) {
-                // TYPO3 4.x
-                $typo3Version = '<comment>' . $typo3Version . '</comment>';
             } else {
-                // Unknown
                 $typo3Version = '<error>unknown</error>';
             }
 
             $typo3List[] = array(
-                $typo3Path,
+                $dirPath,
                 $typo3Version,
             );
         }
@@ -118,5 +92,47 @@ class ListCommand extends \CliTools\Console\Command\AbstractCommand
         $table->render();
 
         return 0;
+    }
+
+    /**
+     * Detect TYPO3 version from installation path
+     *
+     * @param string $dirPath Path to TYPO3 installation
+     * @return string|null
+     */
+    protected function detectTypo3Version(string $dirPath): ?string
+    {
+        // Try composer.json in vendor (Composer mode)
+        $composerFile = $dirPath . '/vendor/typo3/cms-core/composer.json';
+        if (file_exists($composerFile)) {
+            $composerData = json_decode(file_get_contents($composerFile), true);
+            if (isset($composerData['version'])) {
+                return $composerData['version'];
+            }
+        }
+
+        // Try composer.lock in project root
+        $composerLock = $dirPath . '/composer.lock';
+        if (file_exists($composerLock)) {
+            $lockData = json_decode(file_get_contents($composerLock), true);
+            if (isset($lockData['packages'])) {
+                foreach ($lockData['packages'] as $package) {
+                    if ($package['name'] === 'typo3/cms-core') {
+                        return $package['version'];
+                    }
+                }
+            }
+        }
+
+        // Try ext_emconf.php (classic mode)
+        $extEmconfFile = $dirPath . '/typo3/sysext/core/ext_emconf.php';
+        if (file_exists($extEmconfFile)) {
+            $content = file_get_contents($extEmconfFile);
+            if (preg_match('/[\'"]version[\'"]\s*=>\s*[\'"]([^\'"]+)[\'"]/', $content, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return null;
     }
 }

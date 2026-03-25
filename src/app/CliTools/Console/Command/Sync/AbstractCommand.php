@@ -21,6 +21,7 @@ namespace CliTools\Console\Command\Sync;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use CliTools\Console\Command\Traits\ClisyncConfigTrait;
 use CliTools\Database\DatabaseConnection;
 use CliTools\Reader\ConfigReader;
 use CliTools\Shell\CommandBuilder\CommandBuilder;
@@ -29,7 +30,6 @@ use CliTools\Shell\CommandBuilder\OutputCombineCommandBuilder;
 use CliTools\Shell\CommandBuilder\RemoteCommandBuilder;
 use CliTools\Shell\CommandBuilder\SelfCommandBuilder;
 use CliTools\Utility\ConsoleUtility;
-use CliTools\Utility\DockerUtility;
 use CliTools\Utility\FilterUtility;
 use CliTools\Utility\PhpUtility;
 use CliTools\Utility\UnixUtility;
@@ -43,6 +43,7 @@ use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerCommand
 {
+    use ClisyncConfigTrait;
 
     const CONFIG_FILE = 'clisync.yml';
     const GLOBAL_KEY  = 'GLOBAL';
@@ -155,64 +156,8 @@ abstract class AbstractCommand extends \CliTools\Console\Command\AbstractDockerC
         // Read configuration
         $this->readConfiguration();
 
-        $this->initDatabaseConfiguration();
-        $this->initDockerContainer();
-    }
-
-    /**
-     * Init database configuration (for local one)
-     */
-    protected function initDatabaseConfiguration()
-    {
-        $hostname = DatabaseConnection::getDbHostname();
-        $port = DatabaseConnection::getDbPort();
-        $username = DatabaseConnection::getDbUsername();
-        $password = DatabaseConnection::getDbPassword();
-
-        if ($this->config->exists('LOCAL.mysql.hostname')) {
-            $hostname = $this->config->get('LOCAL.mysql.hostname');
-        }
-
-        if ($this->config->exists('LOCAL.mysql.port')) {
-            $port = $this->config->get('LOCAL.mysql.port');
-        }
-
-        if ($this->config->exists('LOCAL.mysql.username')) {
-            $username = $this->config->get('LOCAL.mysql.username');
-        }
-
-        if ($this->config->exists('LOCAL.mysql.password')) {
-            $password = $this->config->get('LOCAL.mysql.password');
-        }
-
-        $dsn = 'mysql:host=' . urlencode($hostname) . ';port=' . (int)$port;
-
-        DatabaseConnection::setDsn($dsn, $username, $password);
-    }
-
-    /**
-     * Init docker container setting
-     */
-    protected function initDockerContainer()
-    {
-        $useDockerMysql = false;
-
-        if ($this->config->exists('LOCAL.mysql.docker')) {
-            $this->setLocalDockerContainer(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL , $this->config->get('LOCAL.mysql.docker'));
-            $useDockerMysql = true;
-        } elseif ($this->config->exists('LOCAL.mysql.docker-compose')) {
-            $this->setLocalDockerContainer(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL , $this->config->get('LOCAL.mysql.docker-compose'), true);
-            $useDockerMysql = true;
-        }
-
-        if ($useDockerMysql) {
-            $container = $this->getLocalDockerContainer(\CliTools\Console\Command\AbstractDockerCommand::DOCKER_ALIAS_MYSQL);
-            $password = DockerUtility::getDockerContainerEnv($container, 'MYSQL_ROOT_PASSWORD');
-            if (empty($password)) {
-                $password = DockerUtility::getDockerContainerEnv($container, 'MARIADB_ROOT_PASSWORD');
-            }
-            DatabaseConnection::setDsn('mysql:host=localhost', 'root', $password);
-        }
+        // Init database and Docker configuration using trait (pass already loaded config)
+        $this->initDatabaseConfigurationFromClisync($this->config);
     }
 
     /**

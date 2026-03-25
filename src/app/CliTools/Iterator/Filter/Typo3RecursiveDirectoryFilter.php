@@ -52,7 +52,7 @@ class Typo3RecursiveDirectoryFilter extends \CliTools\Iterator\Filter\RecursiveD
      *
      * @return bool
      */
-    public function accept()
+    public function accept(): bool
     {
         if (!parent::accept()) {
             return false;
